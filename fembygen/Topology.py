@@ -608,7 +608,7 @@ class TopologyPanel(QtGui.QWidget):
                 else:  # 0 means None thickness selected
                     elset_name = self.doc.Topology.combobox[case][2][elset_id].Name + "Solid"
                 modulus = float(self.doc.Topology.combobox[case][2]
-                         [elset_id].Material["YoungsModulus"].split()[0].replace(',', '.'))
+                                [elset_id].Material["YoungsModulus"].split()[0])  # MPa
                 if self.doc.Topology.combobox[case][2][elset_id].Material["YoungsModulus"].split()[1] != "MPa":
                     raise Exception(" units not recognised in " + self.doc.Topology.combobox[elset_id][2])
                 poisson = float(self.doc.Topology.combobox[case][2][elset_id].Material["PoissonRatio"].split()[0])
