@@ -616,7 +616,7 @@ class TopologyPanel(QtGui.QWidget):
                 # MPa
                 print("modulus",modulus)
                 if self.doc.Topology.combobox[case][2][elset_id].Material["YoungsModulus"].split()[1] != "MPa":
-                    raise Exception(" units not recognised in " + self.doc.Topology.combobox[elset_id][2])
+                    raise Exception(" units not recognised in " + str(self.doc.Topology.combobox[elset_id][2]))
                 poisson = float(self.doc.Topology.combobox[case][2][elset_id].Material["PoissonRatio"].split()[0])
                 try:
                     density = float(self.doc.Topology.combobox[case][2][elset_id].Material["Density"].split()[
