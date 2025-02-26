@@ -607,16 +607,11 @@ class TopologyPanel(QtGui.QWidget):
                         self.doc.Topology.combobox[case][3][thickness_id].Name
                 else:  # 0 means None thickness selected
                     elset_name = self.doc.Topology.combobox[case][2][elset_id].Name + "Solid"
-                try:
-                 # İlk deneme: Normal şekilde float'a çevirme
-                    modulus = float(self.doc.Topology.combobox[case][2][elset_id].Material["YoungsModulus"].split()[0])
-                except ValueError:
-                    # Hata alınırsa: Nokta-virgül dönüşümünü uygula ve tekrar dene
-                    modulus = float(self.doc.Topology.combobox[case][2][elset_id].Material["YoungsModulus"].split()[0].replace(',', '.'))
-                # MPa
+                modulus = float(self.doc.Topology.combobox[case][2]
+                                    [elset_id].Material["YoungsModulus"].split()[0]) # MPa
                 print("modulus",modulus)
                 if self.doc.Topology.combobox[case][2][elset_id].Material["YoungsModulus"].split()[1] != "MPa":
-                    raise Exception(" units not recognised in " + str(self.doc.Topology.combobox[elset_id][2]))
+                    raise Exception(f"Units not recognised in: {self.doc.Topology.combobox[elset_id][2][0].Name}")
                 poisson = float(self.doc.Topology.combobox[case][2][elset_id].Material["PoissonRatio"].split()[0])
                 try:
                     density = float(self.doc.Topology.combobox[case][2][elset_id].Material["Density"].split()[
