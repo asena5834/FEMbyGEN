@@ -633,12 +633,21 @@ class TopologyPanel(QtGui.QWidget):
                 except KeyError:
                     conductivity = 0.
                 try:
-                    if self.doc.Topology.combobox[case][2][elset_id].Material["ThermalExpansionCoefficient"].split()[1] == "um/m/K":
+                    try:
+                        unit = self.doc.Topology.combobox[case][2][elset_id].Material["ThermalExpansionCoefficient"].split()[1]
+                        print(f"Thermal Expansion Coefficient Unit: {unit}")
+                        
+                        # Eğer birim "µm/m/K" ise "um/m/K" olarak değiştir
+                        unit = unit.replace("µ", "u")
+                    except KeyError:
+                        print("ThermalExpansionCoefficient bilgisi bulunamadi.")
+
+                    if unit == "um/m/K":
                         expansion = float(self.doc.Topology.combobox[case][2][elset_id].Material["ThermalExpansionCoefficient"].split()[
-                            0].replace(",",".")) * 1e-6  # um/m/K -> mm/mm/K
-                    elif self.doc.Topology.combobox[case][2][elset_id].Material["ThermalExpansionCoefficient"].split()[1] == "m/m/K":
+                            0].replace(",", ".")) * 1e-6  # um/m/K -> mm/mm/K
+                    elif unit == "m/m/K":
                         expansion = float(self.doc.Topology.combobox[case][2][elset_id].Material["ThermalExpansionCoefficient"].split()[
-                            0].replace(",","."))  # m/m/K -> mm/mm/K
+                            0].replace(",", "."))  # m/m/K -> mm/mm/K
                     else:
                         raise Exception(" units not recognised in " +
                                         self.doc.Topology.combobox[case][2][elset_id].Name)
