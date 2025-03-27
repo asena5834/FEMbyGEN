@@ -609,7 +609,7 @@ class TopologyPanel(QtGui.QWidget):
                     elset_name = self.doc.Topology.combobox[case][2][elset_id].Name + "Solid"
                 modulus = float(self.doc.Topology.combobox[case][2]
                                     [elset_id].Material["YoungsModulus"].split()[0]) # MPa
-                print("modulus",modulus)
+                
                 if self.doc.Topology.combobox[case][2][elset_id].Material["YoungsModulus"].split()[1] != "MPa":
                     raise Exception(f"Units not recognised in: {self.doc.Topology.combobox[elset_id][2][0].Name}")
                 poisson = float(self.doc.Topology.combobox[case][2][elset_id].Material["PoissonRatio"].split()[0])
