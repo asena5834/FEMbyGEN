@@ -1,6 +1,4 @@
 import numpy as np    
-import FreeCAD
-import FreeCADGui
 from PySide import QtGui  
 from fembygen import Common
 class Taguchipy():
