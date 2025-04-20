@@ -1,30 +1,42 @@
 import numpy as np    
+from PySide import QtGui  # Eğer FreeCAD PySide2 kullanıyorsa bunu 'from PySide2 import QtGui' olarak değiştir
 
 class Taguchipy():
-    def __init__(self,param,numberofgen):
-        self.variables=param
-        self.numberofgen=numberofgen
+    def __init__(self, param, numberofgen):
+        self.variables = param
+        self.numberofgen = numberofgen
+
     def selection(self):
         self.FACTORS = len(self.variables)
-        self.LEVELS=self.numberofgen
+        self.LEVELS = self.numberofgen
+
         if self.FACTORS == 3 and self.LEVELS == 2:
-                    print('Taguchi_L4 is applicable.')
-                    return self.design_L4() 
+            print('Taguchi_L4 is applicable.')
+            return self.design_L4() 
         elif self.FACTORS == 4 and self.LEVELS == 3:
-                    print('Taguchi_L9 is applicable.')
-                    return self.design_L9()      
+            print('Taguchi_L9 is applicable.')
+            return self.design_L9()      
         elif self.FACTORS == 7 and self.LEVELS == 2:
-                    print('Taguchi_L8 is applicable.')
-                    return self.design_L8()
+            print('Taguchi_L8 is applicable.')
+            return self.design_L8()
         elif self.FACTORS == 11 and self.LEVELS == 2:
-                    print('Taguchi_L12 is applicable.')
-                    return self.design_L12()
+            print('Taguchi_L12 is applicable.')
+            return self.design_L12()
         elif self.FACTORS == 16 and self.LEVELS == 5:
-                    print('Taguchi_L16b is applicable.')
-                    return self.design_L16()
+            print('Taguchi_L16b is applicable.')
+            return self.design_L16()
         else:
-            raise Exception("Taguchi design not available.")
-    
+            qm = QtGui.QMessageBox
+            ret = qm.warning(None, 'Warning',
+                             "There are no suitable parameters for Taguchi.\nDo you want to delete all previous generations?",
+                             qm.Yes | qm.No)
+            if ret == qm.No:
+                FreeCAD.Console.PrintMessage("Nothing deleted.\n")
+            else:
+                Common.closeGen(0)  # Close all generations
+            raise Exception("There are no suitable parameters for Taguchi.")
+
+        
     def design_L4(self):
             # L4: https://www.itl.nist.gov/div898/software/dataplot/dex/L4.DATşğ
             self.matrix = np.zeros((4,3))
