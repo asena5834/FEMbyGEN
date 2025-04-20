@@ -1,11 +1,7 @@
 import numpy as np    
-<<<<<<< HEAD
-=======
-import FreeCAD
-import FreeCADGui
->>>>>>> 971f9bbb28959612e9bcea698166785d750bd2d2
 from PySide import QtGui  
 from fembygen import Common
+
 class Taguchipy():
     def __init__(self, param, numberofgen):
         self.variables = param
