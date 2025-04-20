@@ -1,6 +1,8 @@
 import numpy as np    
-from PySide import QtGui  # Eğer FreeCAD PySide2 kullanıyorsa bunu 'from PySide2 import QtGui' olarak değiştir
-
+import FreeCAD
+import FreeCADGui
+from PySide import QtGui  
+from fembygen import Common
 class Taguchipy():
     def __init__(self, param, numberofgen):
         self.variables = param
