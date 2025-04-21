@@ -28,14 +28,11 @@ class Taguchipy():
             return self.design_L16()
         else:
             qm = QtGui.QMessageBox
-            ret = qm.warning(None, 'Warning',
-                             "There are no suitable parameters for Taguchi.\nDo you want to delete all previous generations?",
-                             qm.Yes | qm.No)
-            if ret == qm.No:
-                FreeCAD.Console.PrintMessage("Nothing deleted.\n")
-            else:
-                Common.closeGen(0)  # Close all generations
-            raise Exception("There are no suitable parameters for Taguchi.")
+            ret = qm.critical(None, 'Attention',
+                             "There are no suitable parameters for Taguchi.\n",
+                             qm.Ok )
+            
+            FreeCAD.Console.PrintWarning(f"There are no suitable parameters for Taguchi.\n")
 
         
     def design_L4(self):
