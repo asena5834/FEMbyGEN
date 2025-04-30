@@ -1,4 +1,5 @@
-import numpy as np    
+import numpy as np  
+import FreeCAD  
 from PySide import QtGui  
 from fembygen import Common
 
@@ -29,8 +30,15 @@ class Taguchipy():
         else:
             qm = QtGui.QMessageBox
             ret = qm.critical(None, 'Attention',
-                             "There are no suitable parameters for Taguchi.\n",
-                             qm.Ok )
+                            "There are no suitable parameters for Taguchi.\n",
+                            qm.Ok)
+
+            qm.information(None, 'Information',
+                        "You can explore suitable parameters for Taguchi at the following link:\n"
+                        "https://www.york.ac.uk/depts/maths/tables/orthogonal.htm\n\n"
+                        "Alternatively, you may consider using another experimental design method.",
+                        qm.Ok)
+
             
             FreeCAD.Console.PrintWarning(f"There are no suitable parameters for Taguchi.\n")
 
