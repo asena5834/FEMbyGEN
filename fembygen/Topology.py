@@ -609,12 +609,17 @@ class TopologyPanel(QtGui.QWidget):
                     elset_name = self.doc.Topology.combobox[case][2][elset_id].Name + "Solid"
                 modulus = float(self.doc.Topology.combobox[case][2]
                                     [elset_id].Material["YoungsModulus"].split()[0].replace(",",".")) # MPa
-                print("modulus",modulus)
-                if self.doc.Topology.combobox[case][2][elset_id].Material["YoungsModulus"].split()[1] != "MPa":
-                    if self.doc.Topology.combobox[case][2][elset_id].Material["YoungsModulus"].split()[1] == "GPa":
-                        modulus*=1000
-                    else:
-                        raise Exception(f"Units not recognised in: {self.doc.Topology.combobox[elset_id][2][0].Name}")
+                
+                
+                if self.doc.Topology.combobox[case][2][elset_id].Material["YoungsModulus"].split()[1] == "kg/(mm*s^2)":
+                    pass  # already it is eqaul MPa
+                elif self.doc.Topology.combobox[case][2][elset_id].Material["YoungsModulus"].split()[1] == "GPa":
+                    modulus *= 1000  # GPa'yı MPa'ya çevirmek için 1000 ile çarp
+                elif self.doc.Topology.combobox[case][2][elset_id].Material["YoungsModulus"].split()[1] == "Pa":
+                    modulus /= 1e6  # Pa'yı MPa'ya çevirmek için 1e6 ile böl
+                else:
+                    raise Exception(f"Units not recognised in: {self.doc.Topology.combobox[elset_id][2][0].Name}")
+                    
                 poisson = float(self.doc.Topology.combobox[case][2][elset_id].Material["PoissonRatio"].split()[0].replace(",","."))
                 try:
                     density = float(self.doc.Topology.combobox[case][2][elset_id].Material["Density"].split()[
